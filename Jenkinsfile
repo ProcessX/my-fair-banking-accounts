@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'backend-accounts'}
+    agent { label 'backend-account'}
     tools {
         maven "maven"
     }
