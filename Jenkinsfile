@@ -5,6 +5,18 @@ pipeline {
     }
 
     stages {
+        stage('Scan'){
+            steps {
+                withSonarQubeEnv('Sonarqube') {
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                }
+            }
+        }
+        stage('Quality gate'){
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Build Start'
