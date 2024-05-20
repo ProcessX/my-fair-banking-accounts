@@ -5,6 +5,17 @@ pipeline {
     }
 
     stages {
+        stage('Build') {
+            steps {
+                echo 'Build Start'
+                
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[ url: 'https://github.com/ProcessX/my-fair-banking-accounts.git']])
+                
+                sh 'mvn -B -DskipTests clean package'
+                
+                echo 'Build Finished'
+            }
+        }
         stage('Scan'){
             steps {
                 withSonarQubeEnv('sonarqube_server') {
@@ -17,16 +28,6 @@ pipeline {
                 waitForQualityGate abortPipeline: true
             }
         }
-        stage('Build') {
-            steps {
-                echo 'Build Start'
-                
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[ url: 'https://github.com/ProcessX/my-fair-banking-accounts.git']])
-                
-                sh 'mvn -B -DskipTests clean package'
-                
-                echo 'Build Finished'
-            }
-        }
+        
     } 
 }
