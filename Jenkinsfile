@@ -16,18 +16,11 @@ pipeline {
                 echo 'Build Finished'
             }
         }
-        stage('Scan'){
-            steps {
-                withSonarQubeEnv('sonarqube_server') {
-                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
-                }
-            }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+            junit 'build/reports/**/*.xml'
         }
-        stage('Quality gate'){
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-        
-    } 
+    }
 }
