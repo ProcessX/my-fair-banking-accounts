@@ -21,6 +21,11 @@ pipeline {
                 sh 'sudo docker build -t myfairbankingaccount:latest .'
             }
         }
+        stage('Run Container') {
+            steps {
+                sh 'sudo docker run -d -p 8081:8080 myfairbankingaccount'
+            }
+        }
     }
     post {
         always {
