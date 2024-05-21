@@ -1,0 +1,4 @@
+FROM anapsix/alpine-java
+LABEL maintainer="lgeshefdevops@gmail.com"
+COPY /target/*.jar app.jar
+CMD [ "java", "-jar", "/home/my-fair-banking-accounts-0.0.1.jar" ]
