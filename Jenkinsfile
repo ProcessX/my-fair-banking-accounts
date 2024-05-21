@@ -5,6 +5,14 @@ pipeline {
     }
 
     stages {
+        
+        stage('Scan'){
+            steps {
+                withSonarQubeEnv('sonarqube_server') {
+                    sh 'mvn clean compile sonar:sonar'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Build Start'
@@ -14,13 +22,6 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
                 
                 echo 'Build Finished'
-            }
-        }
-        stage('Scan'){
-            steps {
-                withSonarQubeEnv('sonarqube_server') {
-                    sh 'mvn clean compile sonar:sonar'
-                }
             }
         }
 
