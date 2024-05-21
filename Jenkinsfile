@@ -16,6 +16,19 @@ pipeline {
                 echo 'Build Finished'
             }
         }
+        stage('Scan'){
+            steps {
+                withSonarQubeEnv('sonarqube_server') {
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                }
+            }
+        }
+        stage('Quality gate'){
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+
         stage('Docker Build') {
             steps {
                 sh 'sudo docker build -t myfairbankingaccount:latest .'
