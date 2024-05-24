@@ -14,6 +14,7 @@ pipeline {
             }
         }
         stage('Security Scan OWASP ZAP') {
+            agent { label 'statictest' }
             steps {
                 sh 'owasp-zap -port 8081 -cmd -quickurl http://40.89.183.107:8081/ -quickprogress -quickout /var/lib/jenkins/out.xml'
             }
