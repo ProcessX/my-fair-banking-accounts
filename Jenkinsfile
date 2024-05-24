@@ -6,7 +6,7 @@ pipeline {
 
     stages {
         
-        stage('Scan'){
+        stage('Sonarqube Scan'){
             steps {
                 withSonarQubeEnv('sonarqube_server') {
                     sh 'mvn clean compile sonar:sonar'
@@ -33,12 +33,14 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'sudo docker build -t myfairbankingaccount:latest .'
+                sh 'sudo docker container stop myfairbankingaccounts'
+                sh 'sudo docker container rm myfairbankingaccounts'
+                sh 'sudo docker build -t myfairbankingaccounts:latest .'
             }
         }
         stage('Run Container') {
             steps {
-                sh 'sudo docker run -d -p 8081:8080 myfairbankingaccount'
+                sh 'sudo docker run --name myfairbankingaccounts -d -p 8081:8080 myfairbankingaccounts'
             }
         }
     }
