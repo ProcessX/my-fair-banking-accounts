@@ -33,6 +33,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
+                sh 'sudo docker container stop myfairbankingaccounts'
+                sh 'sudo docker container rm myfairbankingaccounts'
                 sh 'sudo docker build -t myfairbankingaccounts:latest .'
             }
         }
