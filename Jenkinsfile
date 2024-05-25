@@ -19,6 +19,12 @@ pipeline {
                 sh 'owasp-zap -port 8081 -cmd -quickurl http://52.143.188.254:8081/ -quickprogress -quickout /home/azureuser/zap-report/out.xml'
             }
         }
+        stage('JMeter Scan') {
+            agent { label 'dynamictest' }
+            steps{
+                bat "cmd C:/Users/azureuser/jmeter/bin/jmeter -jjmeter.save.saveservice.output_format=xml -n -t C:/Users/azureuser/jmeter/bin/test-backend.jmx -l C:/Users/azureuser/jmeter/bin/report.jtl"
+            }
+        }
         
         stage('Build') {
             steps {
