@@ -19,13 +19,7 @@ pipeline {
                 sh 'owasp-zap -port 8081 -cmd -quickurl http://52.143.188.254:8081/ -quickprogress -quickout /var/lib/jenkins/out.xml'
             }
         }
-        stage('Jmeter Scan') {
-            agent { label 'dynamictest'} 
-            steps {
-
-            }
-            
-        }
+        
         stage('Build') {
             steps {
                 echo 'Build Start'
