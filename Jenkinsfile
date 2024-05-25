@@ -5,7 +5,6 @@ pipeline {
     }
 
     stages {
-        /*
         stage('Sonarqube Scan'){
             steps {
                 withSonarQubeEnv('sonarqube_server') {
@@ -19,7 +18,6 @@ pipeline {
                 sh 'owasp-zap -port 8081 -cmd -quickurl http://52.143.188.254:8081/ -quickprogress -quickout /home/azureuser/zap-report/out.xml'
             }
         }
-        */
         stage('JMeter Scan') {
             agent { label 'dynamictest' }
             steps{
