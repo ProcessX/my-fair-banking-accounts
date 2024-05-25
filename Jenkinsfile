@@ -23,7 +23,7 @@ pipeline {
         stage('JMeter Scan') {
             agent { label 'dynamictest' }
             steps{
-                bat "cmd C:/Users/azureuser/jmeter/bin/jmeter -jjmeter.save.saveservice.output_format=xml -n -t C:/Users/azureuser/jmeter/bin/test-backend.jmx -l C:/Users/azureuser/jmeter/bin/report.jtl"
+                bat "C:/Users/azureuser/jmeter/bin/jmeter -jjmeter.save.saveservice.output_format=xml -n -t C:/Users/azureuser/jmeter/bin/test-backend.jmx -l C:/Users/azureuser/jmeter/bin/report.jtl"
             }
         }
         
